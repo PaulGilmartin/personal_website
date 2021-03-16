@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+  {% block site_content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia"/>
+  <body class="homeBody">
+    <div class="container">
+        <div class="row justify-content-center">
+            <img src="{% static central_image %}" class="col-xs-3 centralImage"/>
+        </div>
+        <div class="row justify-content-center">
+            {% for link in links %}
+                <a class="centralLinks col-lg-2" href="{% url link.link %}">{{ link.display }}</a>
+            {% endfor %}
+        </div>
+    </div>
+  </body>
+  {% endblock site_content %}
+
+
