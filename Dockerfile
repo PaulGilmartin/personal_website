@@ -1,0 +1,21 @@
+# Pull base image
+FROM python:3.7
+
+# don't write .pyc files
+ENV PYTHONDONTWRITEBYTECODE 1
+# don't buffer output
+ENV PYTHONUNBUFFERED 1
+
+# Set work directory
+WORKDIR /personal_website
+
+#Install dependencies
+COPY Pipfile Pipfile.lock /personal_website/
+RUN pip install pipenv && pipenv install --system
+
+# Copy project
+# Keeping COPY Pipfile Pipfile.lock /personal_website/ separately
+# from the below means the docker doesn't need to repeat that
+# step whenever we make a code change (docker only runs parts of file,
+# from top down, which haven't changed since last run).
+COPY . /personal_website/

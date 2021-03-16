@@ -1,0 +1,20 @@
+version: '3.7'
+
+
+# Each service corresponds to a distinct container running within our Docker host:
+# web for the Django local server, db for the PostgresSQL database
+
+services:
+  web:    # Can specify which service we want to use by docker-compose exec [service (e.g. web)] bash
+    build: .
+    command: python /personal_website/manage.py runserver 0.0.0.0:8000
+    volumes: # automatically syncs Docker filesystem with out local one, meaning we don't need to rebuild when we change a file
+      - .:/personal_website
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:11
+    environment:
+      POSTGRES_PASSWORD: postgres
