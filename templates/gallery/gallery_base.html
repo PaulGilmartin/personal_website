@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block site_content %}
+
+    <!-- Custom styles for this template -->
+
+    <link href="{% static 'css/gallery.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+
+   <body>
+    <h1>{{ location }}</h1>
+
+    <!-- Default gallery display/ Bootstrap grid system -->
+        <div class="container-fluid">
+            {% for photo_group in object_list %}
+                <div class="row justify-content-center">
+                    {% for photo in photo_group %}
+                        {% if photo.orientation == 'Landscape' %}
+                        <img class="col-xs-6 col-sm-6 col-md-3 col-lg-3 landscape baseImage" src={{ photo.picture.url }}
+                            data-toggle="modal" data-target="#{{ photo.id }}">
+                        {% else %}
+                         <img class="col-xs-6 col-sm-6 col-md-6 col-lg-3 portrait baseImage" src="{% static photo.content_path %}"
+                            data-toggle="modal" data-target="#{{ photo.id }}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+  <!-- Corresponding modal images for each picture displayed -->
+   <div class="container-fluid">
+    {% for photo_group in object_list %}
+        <div class="row justify-content-center">
+        {% for photo in photo_group %}
+            <div class="modal fade" id="{{ photo.id }}" tabindex="-1" role="dialog"
+                aria-labelledby="enlargeImageModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                        {% for picture in photo.modal_images %}
+                            {% if photo.orientation == 'Landscape' %}
+                                <img src={{ picture.url }} class="enlargeImageModalSource" style="width: 100%; height: auto;">
+                            {% else %}
+                                <img src="{% static modal_image_path %}" class="enlargeImageModalSource" style="width: 90%; height: auto; max-height:40em; max-width:30em">
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+         {% endfor %}
+        </div>
+    </div>
+
+    {% endfor %}
+
+  </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock site_content %}
