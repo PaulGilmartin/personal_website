@@ -26,19 +26,22 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['links'] = links
-        context['central_image'] = random.choice(Picture.objects.all())
+        context['central_image'] = random.choice(
+            Picture.objects.filter(location__isnull=False))
         return context
 
 
-class GalleryFrontPageView(TemplateView):
+class GalleryFrontPageView(HomePageView):
     template_name = 'gallery/gallery_front.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        locations = set(Picture.objects.values_list('location', flat=True))
+        locations = set(Picture.objects.filter(
+            location__isnull=False).values_list('location', flat=True))
         context['links'] = [
-            Link(link='city', link_args=location, display=location) for location in locations]
-        context['central_image'] = ''
+            Link(link='city', link_args=location, display=location) for
+            location in locations
+        ]
         return context
 
 
