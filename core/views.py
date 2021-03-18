@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from django.views.generic import TemplateView, ListView
 
-from core.models import Picture, Project
+from core.models import Picture, Project, Paper
 
 
 @dataclass
@@ -20,7 +20,7 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['links'] = [
             Link(link='projects', display='Projects'),
-            # Link(link='publications', display='Publications'),
+            Link(link='publications', display='Publications'),
             Link(link='gallery', display='Gallery'),
         ]
         context['central_image'] = random.choice(Picture.objects.all())
@@ -68,5 +68,20 @@ class ProjectsPageView(ListView):
             "This page details some of the programming projects "
             "I've worked on in my spare time. More to come in the not too distant future."
         )
+        return context
+
+
+class PublicationsPageView(ListView):
+    template_name = 'publications.html'
+    model = Paper
+    context_object_name = 'papers'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Publications'
+        context['blurb'] = """My research interests lie primarily in the field of non-commutative algebra.
+                             I'm particularly interested in Hopf algebras of finite GK-dimension, quantum groups,
+                             quantum homogeneous spaces and Poisson algebraic groups. 
+                             My published research papers in this field are listed below."""
         return context
 
