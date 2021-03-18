@@ -1,8 +1,9 @@
+import random
 from dataclasses import dataclass
 
 from django.views.generic import TemplateView, ListView
 
-from core.models import Picture
+from core.models import Picture, Project
 
 
 @dataclass
@@ -18,11 +19,11 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['links'] = [
-            # Link(link='projects', display='Projects'),
+            Link(link='projects', display='Projects'),
             # Link(link='publications', display='Publications'),
             Link(link='gallery', display='Gallery'),
         ]
-        context['central_image'] = 'images/necropolis.jpg'
+        context['central_image'] = random.choice(Picture.objects.all())
         return context
 
 
@@ -53,3 +54,19 @@ class CityPageView(ListView):
         images_of_location = self.model.objects.filter(location=location)
         landscape_images = images_of_location
         return [landscape_images[n:n+3] for n in range(0, len(landscape_images), 3)]
+
+
+class ProjectsPageView(ListView):
+    template_name = 'projects.html'
+    model = Project
+    context_object_name = 'papers'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Projects'
+        context['blurb'] = (
+            "This page details some of the programming projects "
+            "I've worked on in my spare time. More to come in the not too distant future."
+        )
+        return context
+
