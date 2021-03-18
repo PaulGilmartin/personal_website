@@ -1,8 +1,7 @@
 img.centralImage {
     width: 35%;
-    height: 75%;
+    height: 65%;
     margin-top: 2%;
-    margin-bottom: 10%;
     border: solid black;
 }
 
@@ -18,4 +17,6 @@ a.centralLinks {
 
 .homeBody {
     background-color: white;
+    margin-bottom: 10%;
+
 }
