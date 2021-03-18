@@ -18,9 +18,6 @@ class Picture(models.Model):
     def modal_images(self):
         return [self.picture]
 
-    def get_absolute_url(self):
-        return reverse('picture_detail', kwargs={'pk': str(self.pk)})
-
 
 class AbstractMedia(models.Model):
     title = models.CharField(max_length=200)

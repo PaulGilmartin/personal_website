@@ -64,10 +64,9 @@ class ProjectsPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Projects'
-        context['blurb'] = (
-            "This page details some of the programming projects "
-            "I've worked on in my spare time. More to come in the not too distant future."
-        )
+        context['blurb'] = """This page details some of the programming projects
+            I've worked on in my spare time. More to come in the not too distant future."""
+
         return context
 
 
