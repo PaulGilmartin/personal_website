@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block site_content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+<body>
+
+  <div class="container">
+      <h1 class="justify-content-center">About</h1>
+      <div class="row">
+          <div class="col-xs-10 col-lg-6 justify-content-center flex-first portrait">
+            <img class="portrait" src="{{ portrait.picture.url }}"/>
+
+          </div>
+          <div class="col-xs-10 col-lg-6 justify-content-center flex-last about">
+              <p>My original training is in mathematics, the subject in which I completed a PhD at the University of Glasgow
+                  in 2016. You can view my published research papers <a href="{% url 'publications' %}">here</a>.</p>
+              <p>In the final
+              year of my PhD I taught myself how to code and as a result my primary interest transitioned from mathematics
+              to software engineering and computer science. I've now been a professional Python developer for five years
+                  You can check out some projects I've done in my spare time  <a href="{% url 'projects' %}">here</a>.</p>
+              <p>Recently I've started to enjoy taking film photos. You can see some of them  <a href="{% url 'gallery' %}">here</a>.</p>
+                <div class="row">
+                    {% for link in local_links %}
+                        <a class="col-xs-12 col-lg-4 justify-content-left centralLinks flex-last"
+                           href="{% url link.link %}">{{ link.display }}</a>
+                    {% endfor %}
+                    {% for link in web_links %}
+                        <a class="col-xs-12 col-lg-4 justify-content-left centralLinks flex-last"
+                           href="{{ link.link }}">{{ link.display }}</a>
+                    {% endfor %}
+                </div>
+          </div>
+      </div>
+  </div>
+</body>
+
+{% endblock %}

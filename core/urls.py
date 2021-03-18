@@ -7,7 +7,8 @@ from .views import (
     CityPageView,
     ProjectsPageView,
     PublicationsPageView,
-)
+    ContactPageView,
+    AboutPageView)
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -15,4 +16,6 @@ urlpatterns = [
     path('projects/', ProjectsPageView.as_view(), name='projects'),
     path('publications/', PublicationsPageView.as_view(), name='publications'),
     path('gallery/<slug>', CityPageView.as_view(), name='city'),
+    path('contact/', ContactPageView.as_view(), name='contact'),
+    path('about/', AboutPageView.as_view(), name='about'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

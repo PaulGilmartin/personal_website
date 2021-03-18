@@ -13,16 +13,19 @@ class Link:
     link_args: str = ''
 
 
+links = [
+    Link(link='projects', display='Projects'),
+    Link(link='publications', display='Publications'),
+    Link(link='gallery', display='Gallery'),
+]
+
+
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['links'] = [
-            Link(link='projects', display='Projects'),
-            Link(link='publications', display='Publications'),
-            Link(link='gallery', display='Gallery'),
-        ]
+        context['links'] = links
         context['central_image'] = random.choice(Picture.objects.all())
         return context
 
@@ -84,3 +87,15 @@ class PublicationsPageView(ListView):
                              My published research papers in this field are listed below."""
         return context
 
+
+class ContactPageView(HomePageView):
+    template_name = 'contact.html'
+
+
+class AboutPageView(TemplateView):
+    template_name = 'about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['portrait'] = Picture.objects.get(title='Self portrait')
+        return context
