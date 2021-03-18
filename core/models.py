@@ -13,7 +13,7 @@ class Picture(models.Model):
 
     @property
     def orientation(self):
-        return 'Landscape'
+        return 'Landscape' if self.picture.width > self.picture.height else 'Portrait'
 
     def modal_images(self):
         return [self.picture]

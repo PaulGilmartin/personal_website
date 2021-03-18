@@ -26,8 +26,8 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['links'] = links
-        context['central_image'] = random.choice(
-            Picture.objects.filter(location__isnull=False))
+        images_of_location = Picture.objects.filter(location__isnull=False)
+        context['central_image'] = random.choice(images_of_location)
         return context
 
 
@@ -58,8 +58,10 @@ class CityPageView(ListView):
     def get_queryset(self, *args, **kwargs):
         location = self.kwargs['slug']
         images_of_location = self.model.objects.filter(location=location)
-        landscape_images = images_of_location
-        return [landscape_images[n:n+3] for n in range(0, len(landscape_images), 3)]
+        landscape_images = [i for i in images_of_location if i.orientation == 'Landscape']
+        portrait_images = [i for i in images_of_location if i.orientation == 'Portrait']
+        return [landscape_images[n:n+3] for n in range(0, len(landscape_images), 3)] + [
+            portrait_images[n:n+3] for n in range(0, len(portrait_images), 3)]
 
 
 class ProjectsPageView(ListView):
@@ -72,7 +74,6 @@ class ProjectsPageView(ListView):
         context['title'] = 'Projects'
         context['blurb'] = """This page details some of the programming projects
             I've worked on in my spare time. More to come in the not too distant future."""
-
         return context
 
 

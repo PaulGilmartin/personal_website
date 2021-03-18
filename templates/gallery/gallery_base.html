@@ -21,7 +21,7 @@
                         <img class="col-xs-6 col-sm-6 col-md-3 col-lg-3 landscape baseImage" src={{ photo.picture.url }}
                             data-toggle="modal" data-target="#{{ photo.id }}">
                         {% else %}
-                         <img class="col-xs-6 col-sm-6 col-md-6 col-lg-3 portrait baseImage" src="{% static photo.content_path %}"
+                         <img class="col-xs-6 col-sm-6 col-md-6 col-lg-3 portrait baseImage" src={{ photo.picture.url }}
                             data-toggle="modal" data-target="#{{ photo.id }}">
                         {% endif %}
                     {% endfor %}
@@ -43,7 +43,7 @@
                             {% if photo.orientation == 'Landscape' %}
                                 <img src={{ picture.url }} class="enlargeImageModalSource" style="width: 100%; height: auto;">
                             {% else %}
-                                <img src="{% static modal_image_path %}" class="enlargeImageModalSource" style="width: 90%; height: auto; max-height:40em; max-width:30em">
+                                <img src="{{ picture.url }}" class="enlargeImageModalSource" style="width: 90%; height: auto; max-height:40em; max-width:30em">
                             {% endif %}
                         {% endfor %}
                         </div>
