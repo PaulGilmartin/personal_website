@@ -56,12 +56,25 @@ class CityPageView(ListView):
         return context
 
     def get_queryset(self, *args, **kwargs):
+        import itertools
         location = self.kwargs['slug']
         images_of_location = self.model.objects.filter(location=location)
         landscape_images = [i for i in images_of_location if i.orientation == 'Landscape']
+        landscapes_grouped = self._group(landscape_images)
         portrait_images = [i for i in images_of_location if i.orientation == 'Portrait']
-        return [landscape_images[n:n+3] for n in range(0, len(landscape_images), 3)] + [
-            portrait_images[n:n+3] for n in range(0, len(portrait_images), 3)]
+        portraits_grouped = self._group(portrait_images)
+        zipped = itertools.zip_longest(landscapes_grouped, portraits_grouped)
+        res = []
+        for item in zipped:
+            first, second = item
+            print(first)
+            res.append(first)
+            if second is not None:
+                res.append(second)
+        return res
+
+    def _group(self, pictures):
+        return [pictures[n:n + 3] for n in range(0, len(pictures), 3)]
 
 
 class ProjectsPageView(ListView):
