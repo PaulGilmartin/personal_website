@@ -18,4 +18,9 @@ urlpatterns = [
     path('gallery/<slug>', CityPageView.as_view(), name='city'),
     path('contact/', ContactPageView.as_view(), name='contact'),
     path('about/', AboutPageView.as_view(), name='about'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
