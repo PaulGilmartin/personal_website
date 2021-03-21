@@ -8,14 +8,14 @@ services:
   web:    # Can specify which service we want to use by docker-compose exec [service (e.g. web)] bash
     build: .
     command: python /personal_website/manage.py runserver 0.0.0.0:8000
-    environment:
-      - ENVIRONMENT=development
     volumes: # automatically syncs Docker filesystem with out local one, meaning we don't need to rebuild when we change a file
       - .:/personal_website
     ports:
       - 8000:8000
     depends_on:
       - db
+    env_file:
+      - ./.env.dev
   db:
     image: postgres:11
     environment:
