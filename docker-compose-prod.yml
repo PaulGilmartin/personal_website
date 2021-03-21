@@ -4,7 +4,8 @@ version: '3.7'
 services:
   web:
     build: .
-    command: gunicorn personal_website.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn personal_website.wsgi:application --bind 0.0.0.0:8000 --timeout 120
+
     env_file:
       - ./.env.prod
     ports:
