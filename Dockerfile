@@ -19,3 +19,6 @@ RUN pip install pipenv && pipenv install --system
 # step whenever we make a code change (docker only runs parts of file,
 # from top down, which haven't changed since last run).
 COPY . /personal_website/
+# necessary if we don't run as root as collectstatic
+# will not have perms to create otherwise.
+#RUN mkdir /personal_website/staticfiles

@@ -3,9 +3,11 @@ version: '3.7'
 
 services:
   web:
-    build: .
+    build:
+      context: .
     command: gunicorn personal_website.wsgi:application --bind 0.0.0.0:8000 --timeout 120
-
+    volumes:
+      - static_volume:/personal_website/static
     env_file:
       - ./.env.prod
     expose:
@@ -20,6 +22,8 @@ services:
       - ./.env.prod.db
   nginx:
     build: ./nginx
+    volumes:
+      - static_volume:/personal_website/static
     ports:
       - 1337:80
     depends_on:
@@ -27,3 +31,4 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:

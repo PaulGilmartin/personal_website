@@ -8,7 +8,8 @@ from .views import (
     ProjectsPageView,
     PublicationsPageView,
     ContactPageView,
-    AboutPageView)
+    AboutPageView,
+)
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
