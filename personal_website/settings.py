@@ -124,10 +124,12 @@ USE_TZ = True
 
 # Prod seems to be using STATIC_URL even when debug is off?
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # location of static files in development
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # location of static files in development
 # When in prod, Django compiles all static files into this dir via collectstatic command (using the
 # STATICFILES_FINDERS env var, which is set for us)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
