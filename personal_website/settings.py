@@ -128,8 +128,12 @@ if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # location of static files in development
 # When in prod, Django compiles all static files into this dir via collectstatic command (using the
 # STATICFILES_FINDERS env var, which is set for us)
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+# To get this to work in develop, we need to comment this
+# out. Find a better way - probably by making STATIC_ROOT
+# something like var/www/personal_website/, not just personal_website/static
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
