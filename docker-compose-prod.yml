@@ -9,6 +9,7 @@ services:
     command: gunicorn personal_website.wsgi:application --bind 0.0.0.0:8000 --timeout 120
     volumes:
       - static_volume:/var/www/personal_website/static
+      - media_volume:/var/www/personal_website/media
     env_file:
       - ./.env.prod
     expose:
@@ -25,6 +26,7 @@ services:
     build: ./nginx
     volumes:
       - static_volume:/var/www/personal_website/static
+      - media_volume:/var/www/personal_website/media
     ports:
       - 1337:80
     depends_on:
@@ -33,3 +35,4 @@ services:
 volumes:
   postgres_data:
   static_volume:
+  media_volume:
