@@ -122,20 +122,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# Prod seems to be using STATIC_URL even when debug is off?
 STATIC_URL = '/static/'
+
 if DEBUG:
     STATICFILES_DIRS = ['/personal_website/static']
 else:
     STATICFILES_DIRS = []
-# location of static files in development
-# When in prod, Django compiles all static files into this dir via collectstatic command (using the
-# STATICFILES_FINDERS env var, which is set for us)
 
-
-# To get this to work in develop, we need to comment this
-# out. Find a better way - probably by making STATIC_ROOT
-# something like var/www/personal_website/, not just personal_website/static
 STATIC_ROOT = '/var/www/personal_website/static'
 
 MEDIA_URL = '/media/'
