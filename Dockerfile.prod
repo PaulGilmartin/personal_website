@@ -6,17 +6,25 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # don't buffer output
 ENV PYTHONUNBUFFERED 1
 
-# Set work directory
-WORKDIR /var/www/personal_website/
 
+RUN mkdir -p /var/www
+RUN useradd -ms /bin/bash www
+
+ENV HOME=/var/www/
+ENV APP_HOME=/var/www/personal_website/
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/static/
+RUN mkdir $APP_HOME/media/
+WORKDIR $APP_HOME
 
 #Install dependencies
-COPY Pipfile Pipfile.lock /var/www/personal_website/
+COPY Pipfile Pipfile.lock $APP_HOME
 RUN pip install pipenv && pipenv install --system
 
-# Copy project
-# Keeping COPY Pipfile Pipfile.lock /personal_website/ separately
-# from the below means the docker doesn't need to repeat that
-# step whenever we make a code change (docker only runs parts of file,
-# from top down, which haven't changed since last run).
-COPY . /var/www/personal_website/
+COPY . $APP_HOME
+RUN chown -R www:www $HOME
+USER www
+
+
+
+
