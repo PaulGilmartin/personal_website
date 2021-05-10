@@ -14,8 +14,6 @@ services:
       - ./.env.prod
     expose:
       - 8000
-    ports:
-      - "80:8000"
     depends_on:
       - db
   db:
@@ -30,7 +28,7 @@ services:
       - static_volume:/var/www/personal_website/static
       - media_volume:/var/www/personal_website/media
     ports:
-      - 1337:80
+      - 80:80
     depends_on:
       - web
 
