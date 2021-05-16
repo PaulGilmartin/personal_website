@@ -1,3 +1,4 @@
+import itertools
 import random
 from dataclasses import dataclass
 
@@ -26,7 +27,7 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['links'] = links
-        images_of_location = Picture.objects.filter(location__isnull=False)
+        images_of_location = Picture.objects.filter(location='Copenhagen')
         context['central_image'] = random.choice(images_of_location)
         return context
 
@@ -56,7 +57,6 @@ class CityPageView(ListView):
         return context
 
     def get_queryset(self, *args, **kwargs):
-        import itertools
         location = self.kwargs['slug']
         images_of_location = self.model.objects.filter(location=location)
         landscape_images = [i for i in images_of_location if i.orientation == 'Landscape']
@@ -67,7 +67,6 @@ class CityPageView(ListView):
         res = []
         for item in zipped:
             first, second = item
-            print(first)
             res.append(first)
             if second is not None:
                 res.append(second)
