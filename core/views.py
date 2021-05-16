@@ -27,7 +27,7 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['links'] = links
-        images_of_location = Picture.objects.filter(location='Copenhagen')
+        images_of_location = Picture.objects.get(name='Sunset swim')
         context['central_image'] = random.choice(images_of_location)
         return context
 
