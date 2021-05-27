@@ -22,14 +22,6 @@ COPY Pipfile Pipfile.lock $APP_HOME
 RUN pip install pipenv && pipenv install --system
 
 
-# Cerbot for SSL
-RUN apt-get install software-properties-common
-RUN add-apt-repository ppa:certbot/certbot
-RUN apt-get update
-RUN apt-get install certbot
-RUN certbot certonly --webroot -w /var/www/personal_website -d paulgilmartin.co.uk
-
-
 COPY . $APP_HOME
 RUN chown -R www:www $HOME
 USER www
